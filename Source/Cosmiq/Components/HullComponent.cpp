@@ -3,6 +3,7 @@
 
 #include "HullComponent.h"
 #include "GameFramework/Actor.h"
+#include "Cosmiq/Objects/DamageTypes/HullDamage.h"
 
 // Sets default values for this component's properties
 UHullComponent::UHullComponent()
@@ -53,6 +54,11 @@ void UHullComponent::OnOwnerTakeDamage(
 	AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser
 )
 {
-	DamageHull(Damage, InstigatedBy);
+	const UHullDamage* HullDamageType = Cast<UHullDamage>(DamageType);
+
+	if (HullDamageType)
+	{
+		DamageHull(Damage, InstigatedBy);
+	}
 }
 
