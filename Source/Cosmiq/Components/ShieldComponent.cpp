@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "GameFramework/Actor.h"
+#include "Cosmiq/Objects/DamageTypes/ShieldDamage.h"
 
 // Sets default values for this component's properties
 UShieldComponent::UShieldComponent()
@@ -73,6 +74,11 @@ void UShieldComponent::DamageShield(float Damage)
 
 void UShieldComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	DamageShield(Damage);
+	const UShieldDamage* ShieldDamageType = Cast<UShieldDamage>(DamageType);
+
+	if (ShieldDamageType)
+	{
+		DamageShield(Damage);
+	}
 }
 
