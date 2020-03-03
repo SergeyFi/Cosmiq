@@ -58,7 +58,7 @@ void UShieldComponent::Heal(float Heal)
 	if (ShieldCurrent > ShieldMax) ShieldCurrent = ShieldMax;
 }
 
-void UShieldComponent::DamageShield(float Damage)
+void UShieldComponent::DamageShield(float Damage, AActor* DamageCauser)
 {
 	ShieldCurrent -= Damage;
 
@@ -69,16 +69,23 @@ void UShieldComponent::DamageShield(float Damage)
 		ShieldCurrent = 0.0f;
 
 		OnShieldEnded.Broadcast();
+
+		StartRegeneration();
+	}
+	else
+	{
+		if (DamageCauser)
+		{
+			DamageCauser->Destroy();
+		}
 	}
 }
 
 void UShieldComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	const UShieldDamage* ShieldDamageType = Cast<UShieldDamage>(DamageType);
-
-	if (ShieldDamageType)
+	if (Cast<UShieldDamage>(DamageType))
 	{
-		DamageShield(Damage);
+		DamageShield(Damage, DamageCauser);
 	}
 }
 

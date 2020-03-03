@@ -48,7 +48,7 @@ public:
 
 	void Heal(float Heal);
 
-	void DamageShield(float Damage);
+	void DamageShield(float Damage, AActor* DamageCauser);
 
 	UPROPERTY(BlueprintAssignable, Category = "Shild component")
 	FShieldDelegate OnShieldEnded;
