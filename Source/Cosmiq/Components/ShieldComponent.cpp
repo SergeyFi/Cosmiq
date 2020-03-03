@@ -4,6 +4,10 @@
 #include "ShieldComponent.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+
+#include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
+
 #include "GameFramework/Actor.h"
 #include "Cosmiq/Objects/DamageTypes/ShieldDamage.h"
 
@@ -13,6 +17,13 @@ UShieldComponent::UShieldComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	ShieldCurrent = ShieldMax;
+
+	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
+	SphereComponent->SetupAttachment(this);
+
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	StaticMesh->SetupAttachment(SphereComponent);
+	StaticMesh->SetCollisionProfileName(TEXT("NoCollision"));
 
 	if (GetOwner()) GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UShieldComponent::OnOwnerTakeDamage);
 }

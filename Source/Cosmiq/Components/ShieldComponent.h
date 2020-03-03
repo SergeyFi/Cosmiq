@@ -36,6 +36,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Shield")
 	float RenenerationHeal;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Shield")
+	class USphereComponent* SphereComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Shield")
+	class UStaticMeshComponent* StaticMesh;
+
 	FTimerHandle RegenerationTimer;
 
 	void StartRegeneration();
