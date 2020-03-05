@@ -32,6 +32,7 @@ ABaseShip::ABaseShip()
 	ShieldComponent->SetupAttachment(Mesh);
 
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
+	WeaponComponent->SetupAttachment(Mesh);
 
 }
 
