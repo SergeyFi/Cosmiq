@@ -20,9 +20,42 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	// Weapon properties
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	float HullDamage;
 
-		
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	float ShieldDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	float FirstShotWarmUp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	float CooldownbetweenShot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	TSubclassOf<class AProjectileBase> ProjectileClass;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	bool bIsFiring;
+
+	// Weapon burst mode
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
+	bool bIsBurstFireMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
+	int32 BurstShotCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
+	float CooldownBetweenBurstShot;
+
+	// Other
+	FTimerHandle TimerFiring;
+
+	int32 CurrentFiringCount;
+
+	void Firing();
+
+public:
+	void Fire();
 };

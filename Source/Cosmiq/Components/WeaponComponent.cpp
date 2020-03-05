@@ -2,15 +2,14 @@
 
 
 #include "WeaponComponent.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
+#include "Cosmiq/Actors/Projectiles/ProjectileBase.h"
 
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 
@@ -18,17 +17,40 @@ UWeaponComponent::UWeaponComponent()
 void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 	
 }
 
-
-// Called every frame
-void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UWeaponComponent::Firing()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (GetWorld())
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	// ...
+		GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, GetComponentTransform(), SpawnParams);
+
+		CurrentFiringCount += 1;
+
+		if ((!bIsBurstFireMode && CurrentFiringCount > 0 ) || (bIsBurstFireMode && CurrentFiringCount >= BurstShotCount))
+		{
+			GetWorld()->GetTimerManager().ClearTimer(TimerFiring);
+
+			// weapon cool down, after -> bIsFiring = false
+		}
+	}
+}
+
+void UWeaponComponent::Fire()
+{
+	if (!bIsFiring)
+	{
+		if (GetWorld())
+		{
+			bIsFiring = true;
+
+			GetWorld()->GetTimerManager().SetTimer(TimerFiring, this, &UWeaponComponent::Firing,
+				CooldownbetweenShot, true, FirstShotWarmUp);
+		}
+	}
 }
 
