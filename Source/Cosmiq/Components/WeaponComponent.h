@@ -60,5 +60,6 @@ protected:
 	void WeaponCoolDownEnd();
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void Fire();
 };
