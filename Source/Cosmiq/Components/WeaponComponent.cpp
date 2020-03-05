@@ -10,6 +10,8 @@
 UWeaponComponent::UWeaponComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+
+	bCanFiring = true;
 }
 
 
@@ -31,22 +33,35 @@ void UWeaponComponent::Firing()
 
 		CurrentFiringCount += 1;
 
-		if ((!bIsBurstFireMode && CurrentFiringCount > 0 ) || (bIsBurstFireMode && CurrentFiringCount >= BurstShotCount))
+		if ((!bIsBurstFireMode && CurrentFiringCount > 0 ) || (bIsBurstFireMode && CurrentFiringCount > BurstShotCount))
 		{
 			GetWorld()->GetTimerManager().ClearTimer(TimerFiring);
 
-			// weapon cool down, after -> bIsFiring = false
+			StartWeaponCooldown();
 		}
 	}
 }
 
+void UWeaponComponent::StartWeaponCooldown()
+{
+	if (GetWorld())
+	{
+		GetWorld()->GetTimerManager().SetTimer(TimerCoolDown, this, &UWeaponComponent::Firing, CooldownbetweenShot);
+	}
+}
+
+void UWeaponComponent::WeaponCoolDownEnd()
+{
+	bCanFiring = true;
+}
+
 void UWeaponComponent::Fire()
 {
-	if (!bIsFiring)
+	if (bCanFiring)
 	{
 		if (GetWorld())
 		{
-			bIsFiring = true;
+			bCanFiring = false;
 
 			GetWorld()->GetTimerManager().SetTimer(TimerFiring, this, &UWeaponComponent::Firing,
 				CooldownbetweenShot, true, FirstShotWarmUp);

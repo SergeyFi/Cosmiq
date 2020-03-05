@@ -37,7 +37,7 @@ protected:
 	TSubclassOf<class AProjectileBase> ProjectileClass;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	bool bIsFiring;
+	bool bCanFiring;
 
 	// Weapon burst mode
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
@@ -46,15 +46,18 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
 	int32 BurstShotCount;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Burst mode")
-	float CooldownBetweenBurstShot;
-
 	// Other
 	FTimerHandle TimerFiring;
+
+	FTimerHandle TimerCoolDown;
 
 	int32 CurrentFiringCount;
 
 	void Firing();
+
+	void StartWeaponCooldown();
+
+	void WeaponCoolDownEnd();
 
 public:
 	void Fire();
