@@ -4,13 +4,7 @@
 #include "BaseShip.h"
 
 #include "Cosmiq/Components/HullComponent.h"
-#include "Cosmiq/Components/ShieldComponent.h"
-#include "Cosmiq/Components/WeaponComponent.h"
-
 #include "Components/StaticMeshComponent.h"
-#include "Camera/CameraComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-
 
 // Sets default values
 ABaseShip::ABaseShip()
@@ -20,19 +14,7 @@ ABaseShip::ABaseShip()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	RootComponent = Mesh;
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(Mesh);
-
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(SpringArm);
-
 	HullComponent = CreateDefaultSubobject<UHullComponent>(TEXT("HullComponent"));
-	
-	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
-	ShieldComponent->SetupAttachment(Mesh);
-
-	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
-	WeaponComponent->SetupAttachment(Mesh);
 
 }
 

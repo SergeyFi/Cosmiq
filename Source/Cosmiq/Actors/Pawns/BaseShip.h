@@ -23,19 +23,7 @@ protected:
 	class UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class USpringArmComponent* SpringArm;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UCameraComponent* Camera;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UHullComponent* HullComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UShieldComponent* ShieldComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UWeaponComponent* WeaponComponent;
 
 public:	
 	// Called every frame

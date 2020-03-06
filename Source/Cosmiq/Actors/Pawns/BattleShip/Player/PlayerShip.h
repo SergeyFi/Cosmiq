@@ -3,24 +3,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Cosmiq/Actors/Pawns/BaseShip.h"
-#include "BattleShip.generated.h"
+#include "Cosmiq/Actors/Pawns/BattleShip/BattleShip.h"
+#include "PlayerShip.generated.h"
 
 
 UCLASS()
-class COSMIQ_API ABattleShip : public ABaseShip
+class COSMIQ_API APlayerShip : public ABattleShip
 {
 	GENERATED_BODY()
 
 public:
-	ABattleShip();
+	APlayerShip();
+
 
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UShieldComponent* ShieldComponent;
+	class USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UWeaponComponent* WeaponComponent;
-	
+	class UCameraComponent* Camera;
 };
